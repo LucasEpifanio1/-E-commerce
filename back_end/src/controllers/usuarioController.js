@@ -1,20 +1,24 @@
-const User = require('../models/usuario');
+const Usuario = require('../models/usuario');
+require('../database'); // garante que o model foi inicializado
 
 module.exports = {
-  async index(req, res) {
-    const users = await User.findAll();
-    return res.json(users);
-  },
-
   async store(req, res) {
     const { nome, email, senha } = req.body;
 
     try {
-      const user = await User.create({ nome, email, senha });
-      return res.status(201).json(user);
+      const novoUsuario = await Usuario.create({
+        nome,
+        email,
+        senha
+      });
+
+      return res.json(novoUsuario);
+
     } catch (error) {
-      console.error(error);
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json({
+        error: 'Erro ao criar usuário',
+        detalhes: error.message
+      });
     }
   }
 };

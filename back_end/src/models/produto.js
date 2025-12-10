@@ -1,15 +1,26 @@
-// models/Produto.js
-module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('Produto', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    nome: { type: DataTypes.STRING, allowNull: false },
-    descricao: DataTypes.TEXT,
-    preco: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
-    foto_url: DataTypes.STRING,
-    ativo: { type: DataTypes.BOOLEAN, defaultValue: true },
-    vendedor_id: { type: DataTypes.INTEGER, allowNull: false }
-  }, {
-    tableName: 'produto',
-    timestamps: true
-  });
-};
+const { Model, DataTypes } = require("sequelize");
+
+class Produto extends Model {
+  static init(sequelize) {
+    super.init(
+      {
+        id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+          autoIncrement: true
+        },
+        nome: DataTypes.STRING,
+        descricao: DataTypes.STRING,
+        preco: DataTypes.FLOAT,
+        foto_url: DataTypes.STRING
+      },
+      {
+        sequelize,
+        modelName: "Produto",
+        tableName: "produto"
+      }
+    );
+  }
+}
+
+module.exports = Produto;

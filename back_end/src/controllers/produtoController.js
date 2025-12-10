@@ -1,22 +1,31 @@
-const { Produto } = require('../database');
+const Produto = require("../models/produto");
 
 module.exports = {
-  async store(req, res) {
-    const { nome, descricao, preco, foto_url, vendedor_id } = req.body;
+  async index(req, res) {
+    const produtos = await Produto.findAll();
+    return res.json(produtos);
+  },
 
+  async store(req, res) {
     try {
-      const novoProduto = await Produto.create({
+      const { nome, descricao, preco, foto_url } = req.body;
+
+      const produto = await Produto.create({
         nome,
         descricao,
         preco,
         foto_url,
-        vendedor_id
+        
       });
 
-      return res.status(201).json(novoProduto);
-    } catch (error) {
-      console.error(error);
-      return res.status(400).json({ error: error.message });
+      return res.status(201).json(produto);
+    } catch (err) {
+      return res.status(400).json({
+        error: "Erro ao criar produto",
+        detalhes: err.message,
+      });
+      
     }
+    
   }
 };

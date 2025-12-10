@@ -1,12 +1,10 @@
 const express = require('express');
 const usuarioController = require('./controllers/usuarioController');
-const produtoController = require('./controllers/produtoController');
+const ProdutoController = require("./controllers/produtoController");
 const routes = express.Router();
 
-//usuario
-routes.post('/usuario',usuarioController.store);
-
+routes.post('/usuario', usuarioController.store);
 //produto
-routes.post('/produtos',produtoController.store);
-
+routes.post("/produto", ProdutoController.store);
+routes.get("/produtos", ProdutoController.index);
 module.exports = routes;
