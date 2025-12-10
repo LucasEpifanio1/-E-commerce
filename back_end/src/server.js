@@ -1,12 +1,13 @@
 const express = require('express');
 
-const routes = require('./routes'); // caminho ajustado
-require('./database');
+const app = express();
 
-const app = express(); 
+const produtoController = require('./controllers/produtoController');
 
 
 app.use(express.json());
-app.use(routes);
 
-app.listen(3333, () => console.log('🔥 servidor está funcionando'));
+// Rota POST diretamente usando o controller
+app.post('/produtos', produtoController.store);
+
+app.listen(3000, () => console.log('🔥 servidor está funcionando'));

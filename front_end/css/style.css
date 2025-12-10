@@ -1,0 +1,43 @@
+body {
+  font-family: Arial;
+  margin: 0;
+  padding: 0;
+  background: #f4f4f4;
+}
+
+header {
+  background: #222;
+  padding: 15px;
+  color: white;
+}
+
+nav a {
+  color: #ddd;
+  margin-right: 15px;
+}
+
+.grid {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.card, .detalhe, .item-carrinho {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.card img, .detalhe img {
+  width: 200px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 15px;
+  margin-top: 10px;
+  background: blue;
+  color: white;
+  border-radius: 5px;
+}

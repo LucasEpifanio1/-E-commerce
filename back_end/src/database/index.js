@@ -1,10 +1,16 @@
 const Sequelize = require('sequelize');
 const config = require('../config/database');
 
-const Usuario = require('../models/usuario');
+const connection = new Sequelize(config.database, config.username, config.password, {
+  host: config.host,
+  dialect: config.dialect
+});
 
-const connection = new Sequelize(config);
+// Inicializa os modelos
+const Produto = require('../models/produto')(connection, Sequelize.DataTypes);
+const Usuario = require('../models/produto')(connection, Sequelize.DataTypes);
 
-Usuario.init(connection);
+// Associação
+Produto.belongsTo(Usuario, { foreignKey: 'vendedor_id', as: 'vendedor' });
 
-module.exports = connection;
+module.exports = { connection, Produto, Usuario };
