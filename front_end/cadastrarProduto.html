@@ -1,126 +1,45 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Cadastrar Produto</title>
+  <meta charset="UTF-8">
+  <title>Cadastrar Produto</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px auto;
-            max-width: 500px;
-        }
-
-        h2 {
-            text-align: center;
-        }
-
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            background: #0a77ff;
-            color: #fff;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        button:hover {
-            background: #0056c7;
-        }
-
-        .sucesso {
-            padding: 10px;
-            background: #c8ffc8;
-            border: 1px solid #57d857;
-            margin-bottom: 15px;
-            display: none;
-        }
-
-        .erro {
-            padding: 10px;
-            background: #ffc8c8;
-            border: 1px solid #ff5a5a;
-            margin-bottom: 15px;
-            display: none;
-        }
-    </style>
+  <!-- Importa o CSS global -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <h2>Cadastro de Produto</h2>
+<header>
+  <h1>Meu E-commerce</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="produtos.html">Produtos</a>
+    <a href="carrinho.html">Carrinho</a>
+    <a href="cadastrarProduto.html">Cadastrar produto</a>
+  </nav>
+</header>
 
-    <div id="msg-sucesso" class="sucesso">Produto cadastrado com sucesso!</div>
-    <div id="msg-erro" class="erro">Erro ao cadastrar o produto.</div>
+<h1 style="text-align:center; margin-top:-10px;">Cadastrar Produto</h1>
 
-    <form id="formProduto">
-        <label>Nome:</label>
-        <input type="text" id="nome" required>
+<form action="http://localhost:3000/produto" method="POST">
 
-        <label>Descrição:</label>
-        <textarea id="descricao" required></textarea>
+  <label>Nome:</label>
+  <input type="text" id="nome" name="nome" required>
 
-        <label>Preço:</label>
-        <input type="number" id="preco" step="0.01" required>
+  <label>Descrição:</label>
+  <input type="text" id="descricao" name="descricao" required>
 
-        <label>URL da Foto:</label>
-        <input type="text" id="foto_url" required>
+  <label>Preço:</label>
+  <input type="number" step="0.01" id="preco" name="preco" required>
 
-        <button type="submit">Cadastrar Produto</button>
-    </form>
+  <label>URL da Foto:</label>
+  <input type="text" id="foto_url" name="foto_url" required>
 
-    <script>
-        const form = document.getElementById("formProduto");
-        const msgSucesso = document.getElementById("msg-sucesso");
-        const msgErro = document.getElementById("msg-erro");
+  <button type="submit">Cadastrar</button>
 
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
+</form>
 
-            const produto = {
-                nome: document.getElementById("nome").value,
-                descricao: document.getElementById("descricao").value,
-                preco: document.getElementById("preco").value,
-                foto_url: document.getElementById("foto_url").value
-            };
-
-            try {
-                const response = await fetch("http://localhost:3000/produtos", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(produto)
-                });
-
-                if (response.ok) {
-                    msgErro.style.display = "none";
-                    msgSucesso.style.display = "block";
-                    form.reset();
-                } else {
-                    msgSucesso.style.display = "none";
-                    msgErro.style.display = "block";
-                }
-            } catch (error) {
-                msgSucesso.style.display = "none";
-                msgErro.style.display = "block";
-            }
-        });
-    </script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
