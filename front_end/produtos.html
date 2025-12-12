@@ -13,14 +13,50 @@
     <a href="index.html">Home</a>
     <a href="produtos.html">Produtos</a>
     <a href="carrinho.html">Carrinho</a>
+    <a href="categorias.html">Categorias</a>
+    <a href="cadastrarProduto.html">Cadastrar Produto</a>
+    <a href="estoque.html">Estoque</a>
   </nav>
+
+  <!-- BARRA DE PESQUISA -->
+   <div style="margin-top: 15px; text-align:center;">
+    <input 
+      type="text" 
+      id="campoBusca" 
+      placeholder="Pesquisar produto..." 
+      style="padding: 8px; width: 250px;">
+      
+    <button id="btnBuscar" style="padding: 8px;">Buscar</button>
+  </div>
 </header>
 
 <h2 style="text-align:center; margin-top:20px;">Produtos Disponíveis</h2>
 
+<!-- Ordenar Produtos -->
+<div style="text-align:center; margin-top:15px;">
+  <label for="ordenar">Ordenar por:</label>
+  <select id="ordenar" style="padding: 6px;">
+    <option value="padrao">Padrão</option>
+    <option value="menor">Menor preço</option>
+    <option value="maior">Maior preço</option>
+  </select>
+</div>
+
+<!-- Filtro por Categoria -->
+<div style="text-align:center; margin-bottom:20px;">
+  <label for="categoria">Filtrar por Categoria:</label>
+  <select id="categoria">
+    <option value="0">Todas</option>
+  </select>
+</div>
+
+<!-- Lista de Produtos -->
 <section id="lista-produtos" class="grid"></section>
 
+<p id="msg-cat" style="margin-top:15px; text-align:center;"></p>
+
 <script src="js/produtos.js"></script>
+<script src="js/categoria.js"></script>
 
 </body>
 </html>

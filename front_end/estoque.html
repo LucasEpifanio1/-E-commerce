@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Estoque</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h2 { margin-top: 25px; }
+    input, select, button {
+      padding: 6px;
+      margin: 5px 0;
+      width: 200px;
+    }
+    .caixa {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      width: 300px;
+    }
+    #resultado {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Controle de Estoque</h1>
+
+<!-- Registrar Entrada -->
+<div class="caixa">
+  <h2>Registrar Entrada</h2>
+  <label>ID do Produto:</label><br>
+  <input type="number" id="entrada-produto"><br>
+
+  <label>Quantidade:</label><br>
+  <input type="number" id="entrada-qtd"><br>
+
+  <button onclick="registrarEntrada()">Salvar Entrada</button>
+</div>
+
+<!-- Registrar Retirada -->
+<div class="caixa">
+  <h2>Registrar Retirada</h2>
+  <label>ID do Produto:</label><br>
+  <input type="number" id="retirada-produto"><br>
+
+  <label>Quantidade:</label><br>
+  <input type="number" id="retirada-qtd"><br>
+
+  <button onclick="registrarRetirada()">Salvar Retirada</button>
+</div>
+
+<!-- Listar movimentações -->
+<div class="caixa">
+  <h2>Listar Movimentações</h2>
+  <button onclick="listarMovimentacoes()">Listar Tudo</button>
+</div>
+
+<!-- Listar por produto -->
+<div class="caixa">
+  <h2>Listar Movimentações por Produto</h2>
+  <label>ID do Produto:</label><br>
+  <input type="number" id="listar-id"><br>
+  <button onclick="listarPorProduto()">Buscar</button>
+</div>
+
+<!-- Resultado -->
+<pre id="resultado"></pre>
+
+<script>
+  const API = "http://localhost:3000/estoque";
+
+  async function registrarEntrada() {
+    const produto_id = document.getElementById("entrada-produto").value;
+    const quantidade = document.getElementById("entrada-qtd").value;
+
+    const res = await fetch(`${API}/entrada`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ produto_id, quantidade })
+    });
+
+    document.getElementById("resultado").textContent = 
+      JSON.stringify(await res.json(), null, 2);
+  }
+
+  async function registrarRetirada() {
+    const produto_id = document.getElementById("retirada-produto").value;
+    const quantidade = document.getElementById("retirada-qtd").value;
+
+    const res = await fetch(`${API}/retirada`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ produto_id, quantidade })
+    });
+
+    document.getElementById("resultado").textContent = 
+      JSON.stringify(await res.json(), null, 2);
+  }
+
+  async function listarMovimentacoes() {
+    const res = await fetch(API);
+    document.getElementById("resultado").textContent = 
+      JSON.stringify(await res.json(), null, 2);
+  }
+
+  async function listarPorProduto() {
+    const id = document.getElementById("listar-id").value;
+    const res = await fetch(`${API}/${id}`);
+    document.getElementById("resultado").textContent = 
+      JSON.stringify(await res.json(), null, 2);
+  }
+</script>
+
+</body>
+</html>

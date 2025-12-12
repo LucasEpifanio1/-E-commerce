@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pesquisar Produtos</title>
+</head>
+<body>
+
+  <h1>Pesquisar Produto</h1>
+
+  <input type="text" id="campoBusca" placeholder="Digite o nome do produto...">
+  <button onclick="buscar()">Buscar</button>
+
+  <ul id="resultado"></ul>
+
+<script>
+  async function buscar() {
+    const termo = document.getElementById('campoBusca').value;
+
+    const resposta = await fetch(`http://localhost:3000/produtos/pesquisar?q=${termo}`);
+    const dados = await resposta.json();
+
+    const lista = document.getElementById('resultado');
+    lista.innerHTML = "";
+
+    if (dados.length === 0) {
+      lista.innerHTML = "<li>Nenhum produto encontrado.</li>";
+      return;
+    }
+
+    dados.forEach(p => {
+      const li = document.createElement("li");
+      li.textContent = `${p.nome} - R$ ${p.preco}`;
+      lista.appendChild(li);
+    });
+  }
+</script>
+
+</body>
+</html>

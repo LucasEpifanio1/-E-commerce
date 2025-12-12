@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastrar Usuário</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .box {
+      width: 320px;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin: auto;
+    }
+    input, button {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+    }
+    #msg { margin-top: 10px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h2 style="text-align:center;">Cadastrar Usuário</h2>
+
+<div class="box">
+  <label>Nome</label>
+  <input type="text" id="nome">
+
+  <label>E-mail</label>
+  <input type="email" id="email">
+
+  <label>Senha</label>
+  <input type="password" id="senha">
+
+  <button onclick="cadastrar()">Cadastrar</button>
+
+  <div id="msg"></div>
+</div>
+
+<script>
+  async function cadastrar() {
+    const nome = document.getElementById("nome").value;
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+    const msg = document.getElementById("msg");
+
+    const res = await fetch("http://localhost:3000/usuario", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome, email, senha })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      msg.style.color = "green";
+      msg.textContent = "Usuário cadastrado! Redirecionando...";
+
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1500);
+
+      return;
+    }
+
+    msg.style.color = "red";
+    msg.textContent = data.error || "Erro ao cadastrar.";
+  }
+</script>
+
+</body>
+</html>

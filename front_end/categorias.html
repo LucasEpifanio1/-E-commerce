@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Categorias</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <h1>Gerenciar Categorias</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="produtos.html">Produtos</a>
+    <a href="categorias.html">Categorias</a>
+    <a href="carrinho.html">Carrinho</a>
+  </nav>
+</header>
+
+<h2 style="text-align:center; margin-top:20px;">Cadastrar Nova Categoria</h2>
+
+<div style="max-width:550px; margin:auto; padding:20px; border:1px solid #ccc; border-radius:8px;">
+
+  <!-- FORMULÁRIO TRADICIONAL -->
+  <form action="http://localhost:3000/categoria" method="POST">
+
+    <label for="cat-nome"><strong>Nome da Categoria:</strong></label><br>
+    <input 
+      type="text" 
+      id="cat-nome" 
+      name="nome" 
+      placeholder="Ex: Eletrônicos" 
+      required
+      style="width:100%; padding:8px; margin-top:5px;"
+    >
+    <br><br>
+
+    <label for="cat-mae"><strong>Categoria Mãe:</strong></label><br>
+    <select 
+      id="cat-mae" 
+      name="mae_id" 
+      style="width:100%; padding:8px; margin-top:5px;"
+    >
+      <option value="">Nenhuma</option>
+    </select>
+    <br><br>
+
+    <button 
+      type="submit"
+      style="width:100%; padding:10px; background:#007bff; color:#fff; border:none; border-radius:5px; font-size:16px;"
+    >
+      Salvar Categoria
+    </button>
+
+  </form>
+
+</div>
+
+<!-- carregar lista de categorias no SELECT -->
+<script>
+async function carregarCategorias() {
+  try {
+    const res = await fetch("http://localhost:3000/categoria");
+    const categorias = await res.json();
+
+    const select = document.getElementById("cat-mae");
+
+    categorias.forEach(cat => {
+      const op = document.createElement("option");
+      op.value = cat.id;
+      op.textContent = cat.nome;
+      select.appendChild(op);
+    });
+
+  } catch (e) {
+    console.log("Erro ao carregar categorias", e);
+  }
+}
+
+carregarCategorias();
+</script>
+
+</body>
+</html>
